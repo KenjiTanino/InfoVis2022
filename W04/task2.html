@@ -10,9 +10,13 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
+var padding=10;
+var height=20;
+
 var svg = d3.select("body").append("svg");
 d3.csv("https://KenjiTanino.github.io/InfoVis2022/W04/task2.csv",function(data)
 {
+
 svg.selectAll("rect")
    .data(data)
    .enter()
