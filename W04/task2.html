@@ -2,7 +2,7 @@
 
 <head>
 
-<title>W04: Example 01</title>
+<title>W04: task2 </title>
 
 </head>
 <body>
@@ -26,7 +26,17 @@ svg.selectAll("rect")
    .attr("width", function(d){ return d.width; })
    .attr("height",height)
    .style("fill",function(d){return d.color;})
+
+svg.selectAll("text")
+   .data(data)
+   .enter()
+   .append("text")
+   .attr("x",0)
+   .attr("y", function(d,i){ return padding+i*(height+padding);})
+   .text(function(d){return d.label})
 });
+
+
 
 </script>
 
