@@ -4,7 +4,7 @@ data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 var config = {
 parent: '#drawing_region',
 width: 256,
-height: 128,
+height: 256,
 margin: {top:10, right:10, bottom:20, left:10} };
 const barchart = new Barchart( config, data );
 barchart.update();
@@ -12,7 +12,7 @@ barchart.update();
 .catch( error => { console.log( error ); } );
 
 class Barchart{
-constructor( config, data ) {
+constructor( config, data ){
 this.config = {
 parent: config.parent,
 width: config.width || 256,
@@ -76,4 +76,5 @@ self.xaxis_group
 .call( self.xaxis );
 self.yaxis_group
 .call( self.yaxis );
-}}
+}
+}
