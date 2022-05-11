@@ -1,4 +1,4 @@
-d3.csv("https://KenjiTanino.github.io/InfoVis2022/W08/task8-1.csv")
+d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/task2.csv")
 .then( data => {
 data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 var config = {
