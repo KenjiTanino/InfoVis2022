@@ -51,7 +51,7 @@ self.yaxis = d3.axisLeft( self.yscale )
 
 self.xaxis_group = self.chart.append('g')
 .attr('transform', `translate(0, ${self.inner_height})`);
-self.yaxis_group = self.chart.append('g')
+self.yaxis_group = self.chart.append('g');
 
 }
 
