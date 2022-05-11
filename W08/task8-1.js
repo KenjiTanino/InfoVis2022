@@ -48,7 +48,6 @@ self.xaxis = d3.axisBottom( self.xscale )
 .ticks(5)
 .tickSizeOuter(0);
 self.yaxis = d3.axisLeft( self.yscale )
-.ticks(5)
 .tickSizeOuter(0);
 
 self.xaxis_group = self.chart.append('g')
