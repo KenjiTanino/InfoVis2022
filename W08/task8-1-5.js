@@ -24,7 +24,7 @@ class Barchart {
             width: config.width || 256,
             height: config.height || 256,
             margin: config.margin || {top:10, right:10, bottom:10, left:10}
-        }
+        };
         this.data = data;
         this.init();
     }
@@ -51,7 +51,7 @@ class Barchart {
             .paddingInner(0.1);
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(3)
+            .ticks(5)
             .tickSize(5)
             .tickPadding(5);
 
