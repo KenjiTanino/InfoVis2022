@@ -1,6 +1,6 @@
 d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/task2.csv")
     .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
+        data.forEach( d => { d.label = +d.label; d.value = +d.value; });
 
         var config = {
             parent: '#drawing_region',
@@ -45,18 +45,16 @@ class Barchart {
         self.xscale = d3.scaleLinear()
             .range( [0, self.inner_width] );
 
-        self.yscale = d3.scaleBand()
-            .domain(data.map(d => d.label))
-            .range([0, self.inner_height])
-            .paddingInner(0.1);
+        self.yscale = d3.scaleLinear()
+            .range( [0,self.inner_height] );
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(3)
-            .tickSize(5)
-            .tickPadding(5);
+            .ticks(5);
 
         self.yaxis = d3.axisLeft( self.yscale )
-            .tickSizeOuter(0);
+            .ticks(6)
+            .tickSize(5)
+            .tickPadding(5);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
@@ -68,8 +66,11 @@ class Barchart {
         let self = this;
 
         const xmax = d3.max( self.data, d => d.value );
-        self.xscale.domain( [0, xmax] );
+        self.xscale.domain( [0,xmax] );
 
+        const ymin = d3.min( self.data, d => d.y ) ;
+        const ymax = d3.max( self.data, d => d.y ) ;
+        self.yscale.domain( [ymin, ymax] );
 
         self.render();
     }
@@ -77,12 +78,14 @@ class Barchart {
     render() {
         let self = this;
 
-        chart.selectAll("rect").data(data).enter()
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", d => yscale(d.label))
-        .attr("width", d => xscale(d.value))
-        .attr("height", yscale.bandwidth());
+
+        self.chart.selectAll("circle")
+            .data(self.data)
+            .enter()
+            .append("circle")
+            .attr("cx", d => self.xscale( d.x ) )
+            .attr("cy", d => self.yscale( d.y ) )
+            .attr("r", d => d.r );
 
         self.xaxis_group
             .call( self.xaxis );

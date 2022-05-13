@@ -45,18 +45,18 @@ class Barchart {
         self.xscale = d3.scaleLinear()
             .range( [0, self.inner_width] );
 
-        self.yscale = d3.scaleBand()
-            .domain(data.map(d => d.label))
-            .range([0, self.inner_height])
-            .paddingInner(0.1);
+        self.yscale = d3.scaleLinear()
+            .range( [0, self.inner_height] );
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(3)
+            .ticks(5)
             .tickSize(5)
             .tickPadding(5);
 
         self.yaxis = d3.axisLeft( self.yscale )
-            .tickSizeOuter(0);
+            .ticks(6)
+            .tickSize(5)
+            .tickPadding(5);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
@@ -70,19 +70,26 @@ class Barchart {
         const xmax = d3.max( self.data, d => d.value );
         self.xscale.domain( [0, xmax] );
 
+        const ymin = d3.min( self.data, d => d.y ) ;
+        const ymax = d3.max( self.data, d => d.y ) ;
+        self.yscale.domain( [ymin, ymax] );
 
         self.render();
     }
 
     render() {
         let self = this;
+        const padding=10;
+        const height=10;
 
-        chart.selectAll("rect").data(data).enter()
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", d => yscale(d.label))
-        .attr("width", d => xscale(d.value))
-        .attr("height", yscale.bandwidth());
+        self.chart.selectAll("rect")
+            .data(self.data)
+            .enter()
+            .append("rect")
+            .attr("x", 0)
+            .attr("y", function(d,i){ return padding + i * ( height + padding );})
+            .attr("width", d => self.xscale(d.value))
+            .attr("height", height);
 
         self.xaxis_group
             .call( self.xaxis );
