@@ -47,6 +47,10 @@ class Piechart {
                     .innerRadius(0)
                     .outerRadius(this.radius);
 
+        this.te =d3.arc()
+                .innerRadius(this.radius-10)
+                .outerRadius(this.radius-10);
+
     }
 
     update() {
@@ -61,8 +65,18 @@ class Piechart {
             .enter()
             .append('path')
             .attr('d', this.arc)
-            .attr('fill', 'black')
+            .attr('fill', 'orange')
             .attr('stroke', 'white')
             .style('stroke-width', '2px');
+
+        this.svg.selectAll('pie')
+            .data( this.pie(this.data) )
+            .enter()
+            .append("text")
+            .attr("fill", "black")
+            .attr("transform", function(d){return "translate(" + this.te.centroid(d) + ")";})
+            .attr("dy", "5")
+            .attr("text-anchor", "middle")
+            .text(function(d){return d.data.label;});
     }
 }
