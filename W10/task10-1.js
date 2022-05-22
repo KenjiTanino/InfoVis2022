@@ -106,6 +106,14 @@ class Barchart {
 
         self.yscale.domain(self.data.map(d => d.label));
 
+        
+
+        self.render();
+    }
+
+    render() {
+        let self = this;
+
         self.chart.selectAll("rect")
             .data(self.data)
             .join("rect")
@@ -114,13 +122,7 @@ class Barchart {
             .attr("y", d => self.yscale(d.label))
             .attr("width", d => self.xscale(d.value))
             .attr("height", self.yscale.bandwidth());
-            self.render();
-
-        self.render();
-    }
-
-    render() {
-        let self = this;
+        
 
 
         self.xaxis_group
